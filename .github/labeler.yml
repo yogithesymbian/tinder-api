@@ -1,0 +1,46 @@
+# Configuration for the actions/labeler GitHub Action.
+# See: https://github.com/actions/labeler
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**'
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**'
+          - 'README.md'
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tests/**'
+          - 'phpunit.xml'
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'composer.json'
+          - 'composer.lock'
+          - 'package.json'
+
+database:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'database/**'
+
+frontend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'resources/views/**'
+          - 'resources/css/**'
+          - 'resources/js/**'
+          - 'vite.config.js'
+
+backend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'app/**'
+          - 'routes/**'
+          - 'config/**'
