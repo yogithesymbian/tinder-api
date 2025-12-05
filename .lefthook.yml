@@ -1,0 +1,19 @@
+pre-push:
+  commands:
+    run-php-tests:
+      run: |
+        if [ -f "artisan" ]; then
+          if command -v composer > /dev/null && jq -e '.scripts.test' composer.json > /dev/null 2>&1; then
+            composer test
+          else
+            php artisan test --no-interaction
+          fi
+        else
+          echo "artisan not found — skipping php tests"
+        fi
+      run_in: git_root
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no-install commitlint --edit $1
+      run_in: git_root
