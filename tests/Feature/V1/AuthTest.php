@@ -21,7 +21,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure(['user' => ['id','email'], 'token']);
+                 ->assertJsonStructure(['user' => ['id', 'email'], 'token']);
         $this->assertDatabaseHas('users', ['email' => 'alice@example.test']);
     }
 
