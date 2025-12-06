@@ -51,6 +51,28 @@ class AuthTest extends TestCase
         $this->assertIsString($response->json('token'));
     }
 
+    public function test_user_can_logout()
+    {
+        $user = User::factory()->create();
+
+        $token = $user->createToken('test-token')->plainTextToken;
+        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson('/api/v1/logout');
+
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Logged out']);
+
+        $this->assertDatabaseMissing('personal_access_tokens', [
+            'tokenable_id' => $user->id,
+        ]);
+    }
+
+    public function test_guest_cannot_logout()
+    {
+        $response = $this->postJson('/api/v1/logout');
+        $response->assertStatus(401);
+    }
+
     public function test_invalid_credentials_prevent_login()
     {
         User::factory()->create([
