@@ -14,5 +14,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('people', [PeopleController::class, 'index']);
     Route::post('people/{people}/like', [PeopleController::class, 'like']);
     Route::post('people/{people}/dislike', [PeopleController::class, 'dislike']);
-    Route::get('liked', [PeopleController::class, 'likedList']);
+    Route::get('people/liked', [PeopleController::class, 'likedList']);
 });

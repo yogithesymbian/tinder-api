@@ -6,12 +6,13 @@ namespace App\Http\Controllers;
  * @OA\Info(
  *     title="Tinder API",
  *     version="1.0.0",
- *     description="API documentation for Tinder API project. This API provides authentication endpoints using Laravel Sanctum.",
+ *     description="API documentation for Tinder API project (Technically Assignment). This API provides authentication endpoints using Laravel Sanctum.",
+ *
  *     @OA\Contact(
  *         email="support@tinder-api.com"
  *     )
  * )
- * 
+ *
  * @OA\Server(
  *     url=L5_SWAGGER_CONST_HOST,
  *     description="API Server"
