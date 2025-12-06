@@ -7,6 +7,4 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::prefix('v1')->group(base_path('routes/api/api_v1.php'));
-Route::prefix('v2')->group(base_path('routes/api/api_v2.php'));
 
