@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\V1;
 
-use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
@@ -21,7 +21,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure(['user' => ['id', 'email'], 'token']);
+            ->assertJsonStructure(['user' => ['id', 'email'], 'token']);
         $this->assertDatabaseHas('users', ['email' => 'alice@example.test']);
     }
 
@@ -40,14 +40,14 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
-            'token', 
+            'token',
             'user' => [
                 'id',
                 'name',
                 'email',
-            ]
+            ],
         ]);
-        
+
         $this->assertIsString($response->json('token'));
     }
 
@@ -63,7 +63,7 @@ class AuthTest extends TestCase
             'password' => 'wrongpassword',
         ]);
 
-        $response->assertStatus(422); 
+        $response->assertStatus(422);
         $response->assertJsonMissing(['token']);
     }
 }
