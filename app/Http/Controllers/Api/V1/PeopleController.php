@@ -59,6 +59,7 @@ class PeopleController extends Controller
     public function index(Request $request)
     {
         $perPage = (int) $request->query('per_page', 10);
+        $perPage = max(1, min($perPage, 100));
 
         return response()->json($this->service->listRecommended($perPage));
     }
