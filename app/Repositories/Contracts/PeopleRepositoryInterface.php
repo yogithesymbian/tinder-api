@@ -14,4 +14,8 @@ interface PeopleRepositoryInterface
     public function incrementLikeCount(People $people): void;
 
     public function decrementLikeCount(People $people): void;
+
+    public function updateLikeStatus(int $peopleId, int $userId, bool $isLike): void;
+
+    public function getLikedBy(int $userId, int $perPage = 20): LengthAwarePaginator;
 }
