@@ -11,6 +11,43 @@
 
 Purpose for technical assignment $520/month
 
+## API Documentation
+
+This project uses **Swagger/OpenAPI** for comprehensive API documentation. The interactive API documentation is available at:
+
+**Swagger UI**: [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
+
+### Features
+- 🔐 **Authentication**: Complete documentation for register, login, and logout endpoints
+- 🔒 **Laravel Sanctum**: Integrated bearer token authentication
+- 📝 **Interactive Testing**: Try out API endpoints directly from the browser
+- 📋 **Auto-generated**: Documentation is automatically generated from code annotations
+
+### Available Endpoints
+
+#### Authentication
+- `POST /api/v1/register` - Register a new user
+- `POST /api/v1/login` - Login user
+- `POST /api/v1/logout` - Logout user (requires authentication)
+
+### Generating Documentation
+
+The Swagger documentation is automatically generated. To manually regenerate:
+
+```bash
+php artisan l5-swagger:generate
+```
+
+### Development
+
+In development mode, the documentation is automatically regenerated on each request. For production, set:
+
+```env
+L5_SWAGGER_GENERATE_ALWAYS=false
+```
+
+## Laravel Features
+
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
 - Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.

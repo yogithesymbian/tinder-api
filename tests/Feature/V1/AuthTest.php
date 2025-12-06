@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\V1;
 
-use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
@@ -21,7 +21,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure(['user' => ['id', 'email'], 'token']);
+            ->assertJsonStructure(['user' => ['id', 'email'], 'token']);
         $this->assertDatabaseHas('users', ['email' => 'alice@example.test']);
     }
 
@@ -40,15 +40,37 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
-            'token', 
+            'token',
             'user' => [
                 'id',
                 'name',
                 'email',
-            ]
+            ],
         ]);
-        
+
         $this->assertIsString($response->json('token'));
+    }
+
+    public function test_user_can_logout()
+    {
+        $user = User::factory()->create();
+
+        $token = $user->createToken('test-token')->plainTextToken;
+        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson('/api/v1/logout');
+
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Logged out']);
+
+        $this->assertDatabaseMissing('personal_access_tokens', [
+            'tokenable_id' => $user->id,
+        ]);
+    }
+
+    public function test_guest_cannot_logout()
+    {
+        $response = $this->postJson('/api/v1/logout');
+        $response->assertStatus(401);
     }
 
     public function test_invalid_credentials_prevent_login()
@@ -63,7 +85,7 @@ class AuthTest extends TestCase
             'password' => 'wrongpassword',
         ]);
 
-        $response->assertStatus(422); 
+        $response->assertStatus(422);
         $response->assertJsonMissing(['token']);
     }
 }
