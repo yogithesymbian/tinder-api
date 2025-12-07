@@ -27,12 +27,6 @@ mkdir -p storage/logs
 mkdir -p bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 
-# Generate application key if not exists
-if [ -z "$APP_KEY" ]; then
-    echo "Generating application key..."
-    php artisan key:generate --force
-fi
-
 # Clear and cache configuration
 echo "Optimizing Laravel application..."
 php artisan config:clear

@@ -9,12 +9,25 @@ echo "========================================="
 
 # Wait for database to be ready
 echo "Waiting for database connection..."
-until pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USERNAME" -d "$DB_DATABASE"; do
-    echo "Database is unavailable - sleeping"
-    sleep 2
+# Simple database connection check using PHP artisan
+max_retries=30
+retry_count=0
+
+while [ $retry_count -lt $max_retries ]; do
+    if php artisan migrate:status --no-interaction > /dev/null 2>&1; then
+        echo "Database is ready!"
+        break
+    else
+        echo "Database is unavailable - sleeping (attempt $((retry_count + 1))/$max_retries)"
+        sleep 2
+        retry_count=$((retry_count + 1))
+    fi
 done
 
-echo "Database is ready!"
+if [ $retry_count -eq $max_retries ]; then
+    echo "Warning: Could not verify database connection after $max_retries attempts"
+    echo "Proceeding anyway..."
+fi
 
 # Run migrations
 echo "Running database migrations..."
