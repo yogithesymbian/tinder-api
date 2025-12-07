@@ -34,8 +34,11 @@ COPY . .
 # Make scripts executable
 RUN chmod +x render-build.sh render-start.sh
 
+# Run build script during Docker build
+RUN ./render-build.sh
+
 # Expose port
 EXPOSE 8000
 
-# Default command (overridden by render.yaml startCommand)
+# Start command for the container
 CMD ["./render-start.sh"]
