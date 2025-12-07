@@ -18,6 +18,7 @@ This application is ready to deploy on **Render.com** (free tier) with PostgreSQ
 ### 📚 Documentation
 
 - **[DEPLOYMENT.md](DEPLOYMENT.md)** - Complete deployment guide for Render.com
+- **[CHECKLIST.md](CHECKLIST.md)** - Step-by-step deployment checklist
 - **[QUICKSTART.md](QUICKSTART.md)** - Local development setup and testing
 - **[ALTERNATIVES.md](ALTERNATIVES.md)** - Other free deployment platforms (Railway, Fly.io, etc.)
 
