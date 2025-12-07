@@ -7,15 +7,6 @@ echo "========================================="
 echo "Starting Render Build Process"
 echo "========================================="
 
-# Update system packages
-echo "Installing system dependencies..."
-apt-get update -qq
-apt-get install -y -qq postgresql-client
-
-# Install PHP extensions required for Laravel
-echo "Installing PHP extensions..."
-apt-get install -y -qq php-pgsql php-xml php-mbstring php-curl php-zip php-gd
-
 # Install Composer dependencies
 echo "Installing Composer dependencies..."
 composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist

@@ -57,7 +57,7 @@ If you prefer to set up services manually:
 2. Connect your GitHub repository
 3. Configure:
    - **Name**: `tinder-api`
-   - **Runtime**: PHP
+   - **Runtime**: Docker
    - **Build Command**: `./render-build.sh`
    - **Start Command**: `./render-start.sh`
    - **Plan**: Free
