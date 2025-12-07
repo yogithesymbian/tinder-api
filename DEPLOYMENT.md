@@ -58,9 +58,8 @@ If you prefer to set up services manually:
 3. Configure:
    - **Name**: `tinder-api`
    - **Runtime**: Docker
-   - **Build Command**: `./render-build.sh`
-   - **Start Command**: `./render-start.sh`
    - **Plan**: Free
+   - **Note**: When using Docker runtime, do NOT specify Build Command or Start Command. These are handled by the Dockerfile.
 
 4. **Add Environment Variables**:
    ```
