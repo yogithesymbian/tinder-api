@@ -1,4 +1,6 @@
-# Use official PHP image with Apache
+# Use official PHP CLI image
+# Note: Using CLI instead of FPM/Apache because the application 
+# uses Laravel's built-in server (php artisan serve) via render-start.sh
 FROM php:8.2-cli
 
 # Set working directory
@@ -35,4 +37,5 @@ RUN chmod +x render-build.sh render-start.sh
 # Expose port
 EXPOSE 8000
 
-# The start command will be handled by render-start.sh via render.yaml
+# Default command (overridden by render.yaml startCommand)
+CMD ["./render-start.sh"]
