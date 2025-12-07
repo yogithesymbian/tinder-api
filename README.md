@@ -11,6 +11,19 @@
 
 Purpose for technical assignment $520/month
 
+## 🚀 Deployment
+
+This application is ready to deploy on **Render.com** (free tier) with PostgreSQL database.
+
+**Quick Deploy**: See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment instructions.
+
+### One-Click Deploy to Render
+
+1. Push this repository to GitHub
+2. Go to [Render Dashboard](https://dashboard.render.com)
+3. Create a new Blueprint and select this repository
+4. Render will automatically detect `render.yaml` and deploy everything!
+
 ## API Documentation
 
 This project uses **Swagger/OpenAPI** for comprehensive API documentation. The interactive API documentation is available at:
