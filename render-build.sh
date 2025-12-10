@@ -27,9 +27,10 @@ php artisan route:clear
 php artisan view:clear
 
 # Cache config for better performance
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+# Use array cache driver to avoid database dependency during build
+CACHE_STORE=array php artisan config:cache
+CACHE_STORE=array php artisan route:cache
+CACHE_STORE=array php artisan view:cache
 
 # Install npm dependencies and build assets (if needed)
 if [ -f "package.json" ]; then
