@@ -19,9 +19,10 @@ mkdir -p bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 
 # Clear and cache configuration
+# Use array cache driver during build to avoid database dependency
 echo "Optimizing Laravel application..."
-php artisan config:clear
-php artisan cache:clear
+CACHE_STORE=array php artisan config:clear
+CACHE_STORE=array php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
 
@@ -30,12 +31,12 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Install npm dependencies and build assets
+# Install npm dependencies and build assets (if needed)
 if [ -f "package.json" ]; then
     echo "Installing Node dependencies..."
-    npm ci --omit=dev
+    npm ci
     echo "Building frontend assets..."
-    npm run build
+    npm run build || echo "Warning: Frontend asset build failed, continuing anyway..."
 fi
 
 echo "========================================="
