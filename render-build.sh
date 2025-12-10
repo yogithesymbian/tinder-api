@@ -35,7 +35,7 @@ CACHE_STORE=array php artisan view:cache
 # Install npm dependencies and build assets (if needed)
 if [ -f "package.json" ]; then
     echo "Installing Node dependencies..."
-    npm ci
+    npm ci --ignore-scripts
     echo "Building frontend assets..."
     npm run build || echo "Warning: Frontend asset build failed, continuing anyway..."
 fi
