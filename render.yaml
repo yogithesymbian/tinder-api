@@ -10,8 +10,6 @@ services:
     name: tinder-api
     runtime: docker
     plan: free
-    buildCommand: ./render-build.sh
-    startCommand: ./render-start.sh
     healthCheckPath: /
     envVars:
       - key: APP_ENV
