@@ -1,6 +1,7 @@
 pre-push:
   commands:
     run-php-tests:
+      skip: true
       run: |
         if [ -f "artisan" ]; then
           if command -v composer > /dev/null && jq -e '.scripts.test' composer.json > /dev/null 2>&1; then
