@@ -145,6 +145,19 @@ Once deployed, your API will be available at:
 - Ensure all dependencies are listed in `composer.json`
 - Verify PHP version compatibility (requires PHP 8.2+)
 
+#### "Database file does not exist" Error During Build
+
+If you see an error like:
+```
+Database file at path [/var/www/html/database/database.sqlite] does not exist
+```
+
+This indicates the build script is trying to access the database during build time. This has been fixed in `render-build.sh` by using the array cache driver during build. If you still encounter this:
+
+1. Ensure `render-build.sh` uses `CACHE_STORE=array` for cache operations
+2. Database credentials are only available at runtime, not during Docker build
+3. The fix sets `CACHE_STORE=array php artisan cache:clear` instead of just `php artisan cache:clear`
+
 ### Database Connection Fails
 
 - Verify database credentials in environment variables
