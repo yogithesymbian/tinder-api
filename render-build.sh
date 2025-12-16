@@ -21,7 +21,7 @@ echo "Creating temporary SQLite database for build process..."
 mkdir -p database
 # Create empty SQLite database file for build-time operations
 touch database/database.sqlite
-chmod 664 database/database.sqlite
+chmod 644 database/database.sqlite
 
 echo "Clearing Laravel caches (NO config cache)..."
 php artisan config:clear
