@@ -17,10 +17,13 @@ mkdir -p bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 
 echo "Clearing Laravel caches (NO config cache)..."
+# Use file-based cache during build to avoid database dependency
+export CACHE_STORE=file
 php artisan config:clear
 php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
+unset CACHE_STORE
 
 # ❌ DO NOT cache config / routes / views on Render
 # php artisan config:cache   <-- REMOVE
