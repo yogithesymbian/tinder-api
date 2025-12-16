@@ -100,6 +100,7 @@ else
     echo "Skipping database seeders (set SEED_DATABASE=true to enable)"
 fi
 
+php artisan key:generate
 php artisan key:check || {
   echo "❌ APP_KEY missing"
   exit 1
