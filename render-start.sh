@@ -105,10 +105,10 @@ fi
 # which causes the command to be cancelled
 
 # Generate Swagger documentation (non-critical)
-echo "Generating API documentation..."
-php artisan l5-swagger:generate || {
-    echo "WARNING: Swagger generation failed, continuing anyway..."
-}
+# echo "Generating API documentation..."
+# php artisan l5-swagger:generate || {
+#     echo "WARNING: Swagger generation failed, continuing anyway..."
+# }
 
 # Clear and warm up cache
 echo "Clearing caches..."
