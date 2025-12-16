@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PeopleController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', fn () => response()->json(['ok' => true]));
 Route::get('/health', fn () => 'OK');
 
 Route::post('register', [AuthController::class, 'register'])->middleware('throttle:5,1');

@@ -100,6 +100,11 @@ else
     echo "Skipping database seeders (set SEED_DATABASE=true to enable)"
 fi
 
+php artisan key:check || {
+  echo "❌ APP_KEY missing"
+  exit 1
+}
+
 # Generate Swagger documentation (non-critical)
 echo "Generating API documentation..."
 php artisan l5-swagger:generate || {
