@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Render Start Script for Laravel Application
 
-set -e  # Exit on error
+# Note: We don't use 'set -e' here because we want to handle errors gracefully
+# and continue the startup process even if some non-critical commands fail
 
 echo "========================================="
 echo "Starting Laravel Application"
@@ -31,16 +32,27 @@ fi
 
 # Run migrations
 echo "Running database migrations..."
-php artisan migrate --force --no-interaction
+if ! php artisan migrate --force --no-interaction; then
+    echo "ERROR: Database migrations failed!"
+    exit 1
+fi
 
 # Generate Swagger documentation
 echo "Generating API documentation..."
-php artisan l5-swagger:generate
+if ! php artisan l5-swagger:generate; then
+    echo "Warning: API documentation generation failed, but continuing..."
+fi
 
 # Clear cache in case of any issues
+# Use file cache driver to avoid database dependency issues during startup
 echo "Clearing application cache..."
-php artisan config:clear
-php artisan cache:clear
+if ! php artisan config:clear; then
+    echo "Warning: Config cache clear failed, but continuing..."
+fi
+
+if ! CACHE_STORE=file php artisan cache:clear; then
+    echo "Warning: Cache clear failed, but continuing..."
+fi
 
 # Start PHP-FPM or Laravel server
 echo "Starting web server..."
