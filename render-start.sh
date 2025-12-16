@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 # Render Start Script for Laravel Application
-
+#
+# This script handles the startup process for the Laravel application on Render.com:
+# 1. Waits for database connection to be ready
+# 2. Runs database migrations
+# 3. Generates API documentation
+# 4. Clears application cache (using file driver to avoid DB dependency)
+# 5. Starts the web server
+#
 # Note: We don't use 'set -e' here because we want to handle errors gracefully
-# and continue the startup process even if some non-critical commands fail
+# and continue the startup process even if some non-critical commands fail.
+# Only critical failures (like migration errors) will cause the script to exit.
 
 echo "========================================="
 echo "Starting Laravel Application"
