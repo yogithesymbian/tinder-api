@@ -10,7 +10,7 @@ services:
     name: tinder-api
     runtime: docker
     plan: free
-    healthCheckPath: /
+    healthCheckPath: /up
     # Database connection environment variables
     # Using 'fromDatabase' automatically configures INTERNAL connection strings
     # Internal connections use Render's private network (faster, no bandwidth charges)
