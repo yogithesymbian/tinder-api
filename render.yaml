@@ -11,6 +11,10 @@ services:
     runtime: docker
     plan: free
     healthCheckPath: /
+    # Database connection environment variables
+    # Using 'fromDatabase' automatically configures INTERNAL connection strings
+    # Internal connections use Render's private network (faster, no bandwidth charges)
+    # The pg_isready check in render-start.sh works with internal hostnames
     envVars:
       - key: APP_ENV
         value: production
@@ -52,3 +56,5 @@ services:
         value: info
       - key: BCRYPT_ROUNDS
         value: 12
+      - key: DB_READY_TIMEOUT
+        value: 60
