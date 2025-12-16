@@ -19,7 +19,7 @@ echo "DB_DATABASE=$DB_DATABASE"
 
 # Run migrations
 echo "Running database migrations..."
-php artisan migrate:fresh --force || exit 1
+php artisan migrate --force || exit 1
 php artisan db:seed
 
 # Generate Swagger (non-critical)
