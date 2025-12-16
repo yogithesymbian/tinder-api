@@ -35,12 +35,12 @@ echo "Note: Render.com free tier databases may take 30-60s to wake up from sleep
 if command -v pg_isready > /dev/null 2>&1; then
     echo "Using pg_isready for connection check..."
     export PGPASSWORD="$DB_PASSWORD"
-    for i in $(seq 1 $DB_READY_TIMEOUT); do
+    for i in $(seq 1 "$DB_READY_TIMEOUT"); do
         if pg_isready -h "$DB_HOST" -p "${DB_PORT:-5432}" -U "$DB_USERNAME" > /dev/null 2>&1; then
             echo "✓ PostgreSQL is ready! (took ${i}s)"
             break
         fi
-        if [ $i -eq $DB_READY_TIMEOUT ]; then
+        if [ $i -eq "$DB_READY_TIMEOUT" ]; then
             echo "ERROR: PostgreSQL is not ready after ${DB_READY_TIMEOUT} seconds"
             echo "Troubleshooting tips:"
             echo "  1. Check if database is created in Render dashboard"
