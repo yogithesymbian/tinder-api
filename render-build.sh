@@ -16,20 +16,15 @@ mkdir -p storage/logs
 mkdir -p bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 
-echo "Creating temporary SQLite database for build process..."
-# Create database directory if it doesn't exist
-mkdir -p database
-# Create empty SQLite database file for build-time operations
-touch database/database.sqlite
-chmod 644 database/database.sqlite
-
-echo "Clearing Laravel caches (NO config cache)..."
-php artisan config:clear
-php artisan cache:clear
+echo "Clearing Laravel caches (using file cache for build)..."
+# Use file-based cache during build to avoid database dependency
+CACHE_STORE=file php artisan config:clear
+CACHE_STORE=file php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
 
 # ❌ DO NOT cache config / routes / views on Render
+# Config cache causes issues when environment variables change
 # php artisan config:cache   <-- REMOVE
 # php artisan route:cache    <-- REMOVE
 # php artisan view:cache     <-- REMOVE
