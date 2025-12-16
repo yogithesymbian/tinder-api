@@ -164,6 +164,21 @@ This indicates the build script is trying to access the database during build ti
 - Check database is running and accessible
 - Ensure PostgreSQL database is in the same region as web service for best performance
 
+#### "Relation 'cache' does not exist" Error During Startup
+
+If you see an error like:
+```
+SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "cache" does not exist
+LINE 1: delete from "cache"
+```
+
+This has been fixed in `render-start.sh` by:
+1. Using `CACHE_STORE=file` for the `cache:clear` command during startup
+2. Adding proper error handling so non-critical failures don't stop the deployment
+3. Removing `set -e` to allow graceful error handling
+
+The issue occurred because after running migrations, the cache clear command tried to use the database cache driver before the database connection properly recognized the newly created cache table. Using file-based cache for the startup cache clear avoids this issue entirely.
+
 ### Application Errors
 
 - Check application logs in Render Dashboard
