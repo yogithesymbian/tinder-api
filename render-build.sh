@@ -36,6 +36,12 @@ if [ -f "package.json" ]; then
     npm run build
 fi
 
+echo "===== AFTER BUILD ====="
+pwd
+ls -la public
+ls -la public/index.php || echo "❌ index.php missing after build"
+
+
 echo "========================================="
 echo "Build completed successfully!"
 echo "========================================="
