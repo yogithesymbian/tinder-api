@@ -29,12 +29,12 @@ php artisan view:clear
 # php artisan route:cache    <-- REMOVE
 # php artisan view:cache     <-- REMOVE
 
-if [ -f "package.json" ]; then
-    echo "Installing Node dependencies..."
-    npm ci --ignore-scripts
-    echo "Building frontend assets..."
-    npm run build
-fi
+# if [ -f "package.json" ]; then
+#     echo "Installing Node dependencies..."
+#     npm ci --ignore-scripts
+#     echo "Building frontend assets..."
+#     npm run build
+# fi
 
 echo "===== AFTER BUILD ====="
 pwd
