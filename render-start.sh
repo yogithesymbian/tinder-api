@@ -7,11 +7,12 @@ echo "Starting Laravel Application on Render"
 echo "========================================="
 
 # Verify required environment variables
-if [ -z "$DB_HOST" ] || [ -z "$DB_DATABASE" ] || [ -z "$DB_USERNAME" ]; then
+if [ -z "$DB_HOST" ] || [ -z "$DB_DATABASE" ] || [ -z "$DB_USERNAME" ] || [ -z "$DB_PASSWORD" ]; then
     echo "ERROR: Database environment variables are not set!"
     echo "DB_CONNECTION=$DB_CONNECTION"
     echo "DB_HOST=$DB_HOST"
     echo "DB_DATABASE=$DB_DATABASE"
+    echo "DB_USERNAME=$DB_USERNAME"
     exit 1
 fi
 
@@ -23,6 +24,7 @@ echo "  Username: $DB_USERNAME"
 
 # Wait for PostgreSQL to be ready (max 30 seconds)
 echo "Waiting for PostgreSQL to be ready..."
+export PGPASSWORD="$DB_PASSWORD"
 for i in {1..30}; do
     if pg_isready -h "$DB_HOST" -p "${DB_PORT:-5432}" -U "$DB_USERNAME" > /dev/null 2>&1; then
         echo "✓ PostgreSQL is ready!"
@@ -35,6 +37,7 @@ for i in {1..30}; do
     echo "  Waiting... ($i/30)"
     sleep 1
 done
+unset PGPASSWORD
 
 # Test database connection
 echo "Testing database connection..."
@@ -53,7 +56,7 @@ php artisan migrate --force || {
 # Run seeders only if SEED_DATABASE is set to true
 if [ "$SEED_DATABASE" = "true" ]; then
     echo "Running database seeders..."
-    php artisan db:seed --force || {
+    php artisan db:seed || {
         echo "WARNING: Seeding failed, continuing anyway..."
     }
 else
