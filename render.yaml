@@ -10,7 +10,7 @@ services:
     name: tinder-api
     runtime: docker
     plan: free
-    healthCheckPath: /
+    healthCheckPath: /up
     # Database connection environment variables
     # Using 'fromDatabase' automatically configures INTERNAL connection strings
     # Internal connections use Render's private network (faster, no bandwidth charges)
@@ -22,6 +22,10 @@ services:
         value: false
       - key: APP_KEY
         generateValue: true
+      # APP_URL should be set manually to your Render service URL (e.g., https://tinder-api.onrender.com)
+      # sync: false means this value won't be automatically synchronized across deployments
+      - key: APP_URL
+        sync: false
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
