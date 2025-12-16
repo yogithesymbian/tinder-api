@@ -35,7 +35,9 @@ echo "Note: Render.com free tier databases may take 30-60s to wake up from sleep
 if command -v pg_isready > /dev/null 2>&1; then
     echo "Using pg_isready for connection check..."
     export PGPASSWORD="$DB_PASSWORD"
-    for i in $(seq 1 "$DB_READY_TIMEOUT"); do
+    
+    # Use arithmetic expansion for better portability
+    for ((i=1; i<=DB_READY_TIMEOUT; i++)); do
         if pg_isready -h "$DB_HOST" -p "${DB_PORT:-5432}" -U "$DB_USERNAME" > /dev/null 2>&1; then
             echo "✓ PostgreSQL is ready! (took ${i}s)"
             break
@@ -49,8 +51,8 @@ if command -v pg_isready > /dev/null 2>&1; then
             echo "  4. Check Render database logs for errors"
             exit 1
         fi
-        # Show progress every 5 seconds to reduce log noise
-        if [ $((i % 5)) -eq 0 ]; then
+        # Show progress at start (3s) and then every 5 seconds to reduce log noise
+        if [ $i -eq 3 ] || [ $((i % 5)) -eq 0 ]; then
             echo "  Still waiting... (${i}/${DB_READY_TIMEOUT}s)"
         fi
         sleep 1
@@ -58,9 +60,14 @@ if command -v pg_isready > /dev/null 2>&1; then
     unset PGPASSWORD
 else
     # Fallback: Try direct database connection test with Laravel
+    # Wait proportionally to configured timeout (minimum 10s, up to half of DB_READY_TIMEOUT)
+    FALLBACK_WAIT=$((DB_READY_TIMEOUT / 2))
+    if [ $FALLBACK_WAIT -lt 10 ]; then
+        FALLBACK_WAIT=10
+    fi
     echo "pg_isready not available, using Laravel connection test..."
-    echo "Waiting ${DB_READY_TIMEOUT}s before attempting connection..."
-    sleep 5
+    echo "Waiting ${FALLBACK_WAIT}s before attempting connection..."
+    sleep "$FALLBACK_WAIT"
 fi
 
 # Test database connection
