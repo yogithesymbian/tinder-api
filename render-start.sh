@@ -6,6 +6,12 @@ echo "========================================="
 echo "Starting Laravel Application on Render"
 echo "========================================="
 
+php -m | grep intl || {
+  echo "❌ intl extension NOT installed"
+  exit 1
+}
+
+
 # Verify required environment variables
 if [ -z "$DB_HOST" ] || [ -z "$DB_DATABASE" ] || [ -z "$DB_USERNAME" ] || [ -z "$DB_PASSWORD" ]; then
     echo "ERROR: Database environment variables are not set!"
