@@ -6,8 +6,8 @@ echo "========================================="
 
 # Run migrations
 echo "Running database migrations..."
-php artisan migrate --force || exit 1
-
+php artisan migrate:fresh --force || exit 1
+php artisan db:seed
 # Generate Swagger (non-critical)
 echo "Generating API documentation..."
 php artisan l5-swagger:generate || true
