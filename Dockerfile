@@ -1,5 +1,5 @@
-# Use PHP-FPM instead of CLI
-FROM php:8.2-fpm
+# Use PHP CLI instead of FPM
+FROM php:8.2-cli
 
 # Set working directory
 WORKDIR /var/www/html
@@ -23,19 +23,21 @@ RUN docker-php-ext-install pdo_pgsql pgsql mbstring exif pcntl bcmath gd
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install Node.js and npm (required for asset building)
+# Install Node.js and npm (for asset building)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
 # Copy application files
 COPY . .
 
-# Build assets
-RUN chmod +x render-build.sh && ./render-build.sh
+# Make scripts executable
+RUN chmod +x render-build.sh render-start.sh
 
-# Expose the Render internal port
+# Build app & assets
+RUN ./render-build.sh
+
+# Expose Render internal port
 EXPOSE 10000
 
-# Health check route is already defined in routes/web.php (/up)
-# CMD will run PHP-FPM which listens on $PORT
-CMD ["php-fpm"]
+# Run your start script which will run artisan serve
+CMD ["./render-start.sh"]

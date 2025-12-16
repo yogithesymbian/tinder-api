@@ -4,12 +4,9 @@ echo "========================================="
 echo "Starting Laravel Application"
 echo "========================================="
 
-# Run migrations (ensures DB connectivity)
+# Run migrations
 echo "Running database migrations..."
-php artisan migrate --force --no-interaction || {
-  echo "ERROR: Database migrations failed!"
-  exit 1
-}
+php artisan migrate --force || exit 1
 
 # Generate Swagger (non-critical)
 echo "Generating API documentation..."
@@ -20,6 +17,7 @@ echo "Clearing caches..."
 php artisan config:clear || true
 CACHE_DRIVER=file php artisan cache:clear || true
 
-# NO php artisan serve here!
-# Render will automatically start PHP-FPM as CMD in Dockerfile
-echo "Laravel is ready. PHP-FPM will serve requests automatically."
+# Serve Laravel on the port Render provides
+PORT=${PORT:-10000}
+echo "Server starting on port $PORT..."
+php artisan serve --host=0.0.0.0 --port=$PORT
