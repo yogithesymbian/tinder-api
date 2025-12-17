@@ -36,7 +36,7 @@ This application is ready to deploy on **Render.com** (free tier) with PostgreSQ
 
 This project uses **Swagger/OpenAPI** for comprehensive API documentation. The interactive API documentation is available at:
 
-**Swagger UI**: [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
+**Swagger UI**: [https://tinder-api-rtey.onrender.com/api/documentation](https://tinder-api-rtey.onrender.com/api/documentation)
 
 ### Features
 - 🔐 **Authentication**: Complete documentation for register, login, and logout endpoints
