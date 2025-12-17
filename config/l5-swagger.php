@@ -47,6 +47,8 @@ return [
                     base_path('app'),
                 ],
             ],
+            'generate_always' => true,
+            'asset_url' => env('APP_URL').'/docs/asset',
         ],
     ],
     'defaults' => [
